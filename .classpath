@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-android.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-gwt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-headless.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-jglfw.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-jglfw-natives.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-backend-robovm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-setup.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/tween-engine-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/tween-engine-api-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-stb-truetype.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tom/gdx/gdx-stb-truetype-natives.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
