@@ -8,19 +8,12 @@ import java.util.Set;
 import materials.Player;
 import materials.Table;
 import materials.events.TableEvent;
-import ui.actors.CardActor;
-import ui.actors.CardGroup;
-import ui.actors.CardHand;
 import ui.actors.PlayerActor;
 import ui.actors.PlayerLayer;
-import app.CardGame;
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.TweenCallback;
 
 import com.badlogic.gdx.Gdx;
 
 import data.Card;
-import data.CardType;
 
 public class PlayerPresenter {
 	private PlayerLayer _layer;

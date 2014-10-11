@@ -54,6 +54,10 @@ public class Table extends EventDispatcher {
 		_startPlayerIndex = playerIndex;
 	}
 	
+	public void startWith(Player p) {
+		_startPlayerIndex = _players.indexOf(p);
+	}
+	
 	public Player getStartPlayer() {
 		return _players.get(_startPlayerIndex);
 	}
@@ -75,5 +79,16 @@ public class Table extends EventDispatcher {
 	
 	public List<Player> getPlayers() {
 		return _players;
+	}
+	
+	public void upgradeAll() {
+		for(Player s : _players) {
+			
+			// Grundeinkommen
+			s.transferBasicIncome();
+			
+			// Produktion
+			s.transferProductionIncome();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package ui.screens;
 
+import materials.Market;
 import materials.Player;
 import materials.Table;
 import ui.buttons.DefaultButton;
@@ -26,14 +27,14 @@ public class PlayScreen extends TableScreen {
 		
 		PlayerPresenter playerPresenter = new PlayerPresenter(t);
 
-		MarketPresenter marketPresenter = new MarketPresenter(t);
+		MarketPresenter marketPresenter = new MarketPresenter(new Market(t));
 		marketPresenter.presentDeck(CardGame.cards().buildDeck(30));
 
 		_stage.addActor(marketPresenter.getLayer());
 		_stage.addActor(playerPresenter.getLayer());
 		setupHelperButtons();
 		
-		//marketPresenter.startPeriod();
+		marketPresenter.startPeriod();
 	}
 	
 	private void setupHelperButtons() {
