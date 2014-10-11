@@ -1,15 +1,10 @@
 package ui.actors;
 
-import java.util.HashMap;
-
 import ui.text.Fonts;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-
-import data.Card;
-import data.CardType;
 
 public class PlayerLayer extends DisplayContainer {
 	private Label _nameLabel;
@@ -24,13 +19,13 @@ public class PlayerLayer extends DisplayContainer {
 	private Label _statusLabel;
 	private Label _statusField;
 	
-	private HashMap<CardType, CardHandGroup> _cardHandGroups;
+	private CardHand _cardHand;
 	
 	public PlayerLayer() {
-		setupUI();
+		placeComponents();
 	}
 	
-	public void setupUI() {
+	public void placeComponents() {
 		_nameLabel = new Label("Players turn", new LabelStyle(Fonts.HORSERAD_LABEL, Color.WHITE));
 		_nameLabel.setPosition(60, 100);
 		addActor(_nameLabel);
@@ -64,32 +59,13 @@ public class PlayerLayer extends DisplayContainer {
 		_statusField.setPosition(560, 60);
 		addActor(_statusField);
 		
-		_cardHandGroups = new HashMap<>();
-		CardHandGroup factoryGroup = new CardHandGroup();
-		factoryGroup.setPosition(700, -100);
-		
-		CardHandGroup statusGroup = new CardHandGroup();
-		statusGroup.setPosition(850, -100);
-		
-		CardHandGroup eventGroup = new CardHandGroup();
-		eventGroup.setPosition(1000, -100);
-		
-		CardHandGroup specialGroup = new CardHandGroup();
-		specialGroup.setPosition(1150, -100);
-		
-		_cardHandGroups.put(CardType.PRODUCTION, factoryGroup);
-		_cardHandGroups.put(CardType.WEALTH, statusGroup);
-		_cardHandGroups.put(CardType.ACTION, eventGroup);
-		_cardHandGroups.put(CardType.SERVICE, specialGroup);
-		
-		addActor(factoryGroup);
-		addActor(statusGroup);
-		addActor(eventGroup);
-		addActor(specialGroup);
+		_cardHand = new CardHand();
+		_cardHand.setPosition(700, 0);
+		addActor(_cardHand);
 	}
 	
-	public CardHandGroup getHandGroupByType(CardType type) {
-		return _cardHandGroups.get(type);
+	public CardHand getCardHand() {
+		return _cardHand;
 	}
 	
 	public Label getNameField() {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import materials.Auction;
 import materials.Player;
+import materials.Table;
 import ui.actors.CardActor;
 import ui.actors.DeckActor;
 import ui.actors.DisplayContainer;
@@ -33,14 +34,15 @@ public class MarketPresenter {
 	private DeckActor _deckActor;
 	private Auction _auction;
 	private int _auctionIndex;
+	private Table _table;
 	
-	public MarketPresenter(PlayerPresenter playerPresenter, DeckActor deck) {		
+	public MarketPresenter(Table table, DeckActor deck) {
+		_table = table;
 		_layer = new DisplayContainer();
-		_playerPresenter = playerPresenter;
 		_placedCards = new ArrayList<CardActor>();
 		_deckActor = deck;
 		_auctionPresenter = new AuctionPresenter(_playerPresenter);
-		_auctionPresenter.addActionListener(AuctionEvent.PLACE_BID, new ActionListener() {
+		_auctionPresenter.addEventListener(AuctionEvent.PLACE_BID, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -48,7 +50,7 @@ public class MarketPresenter {
 			}
 		});
 		
-		_auctionPresenter.addActionListener(AuctionEvent.PASS, new ActionListener() {
+		_auctionPresenter.addEventListener(AuctionEvent.PASS, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -73,7 +75,7 @@ public class MarketPresenter {
 
 		if(_auction.allPassed()) {
 			passAuction();
-			_playerPresenter.nextPlayer();
+			_table.selectStartPlayer();
 			startAuction(nextAuctionIndex);
 		} else if(_auction.isClosed()) {
 			Card wonCard = getAuctionPlacedCard().getCard();
@@ -83,11 +85,11 @@ public class MarketPresenter {
 			highestBidder.withdrawMoney(_auction.getHighestBid());
 			_placedCards.get(_auctionIndex).remove();
 			
-			_playerPresenter.selectPlayer(highestBidder);
+			_table.selectPlayer(highestBidder);
 			startAuction(nextAuctionIndex);
 
 		} else {
-			_playerPresenter.nextPlayer();
+			_table.nextPlayer();
 		}
 		
 		
@@ -139,7 +141,7 @@ public class MarketPresenter {
 		}
 		
 		_auction = _auctionPresenter.start(_placedCards.get(index));
-		for(Player s : _playerPresenter.getSessions()) {
+		for(Player s : _table.getPlayers()) {
 			_auction.bid(s, null);
 		}
 		_auctionIndex = index;
@@ -162,8 +164,8 @@ public class MarketPresenter {
 
 			@Override
 			public void onEvent(int arg0, BaseTween<?> arg1) {
-				upgradeSessions();
-				startAuctions();
+				upgradePlayers();
+				startPeriod();
 			}
 			
 		});
@@ -171,8 +173,8 @@ public class MarketPresenter {
 		tweens.start(CardGame.tweens());
 	}
 	
-	public void upgradeSessions() {
-		for(Player s : _playerPresenter.getSessions()) {
+	public void upgradePlayers() {
+		for(Player s : _table.getPlayers()) {
 			
 			// Grundeinkommen
 			s.transferBasicIncome();
@@ -182,7 +184,7 @@ public class MarketPresenter {
 		}
 	}
 	
-	public void startAuctions() {
+	public void startPeriod() {
 		int takeCount = 5;
 		float xPos = _deckActor.getX()-230;
 		float delay = 0;
@@ -223,7 +225,7 @@ public class MarketPresenter {
 			@Override
 			public void onEvent(int arg0, BaseTween<?> arg1) {
 				startAuction(0);
-				_playerPresenter.selectPlayer(0);
+				_table.selectStartPlayer();
 			}
 			
 		});

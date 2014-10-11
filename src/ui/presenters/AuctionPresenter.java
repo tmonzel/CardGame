@@ -9,9 +9,9 @@ import materials.Auction;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import events.ActionDispatcher;
+import event.EventDispatcher;
 
-public class AuctionPresenter extends ActionDispatcher {
+public class AuctionPresenter extends EventDispatcher {
 	private AuctionActor _actor;
 	private DisplayContainer _layer;
 	private Auction _auction;
@@ -43,12 +43,12 @@ public class AuctionPresenter extends ActionDispatcher {
 	public void placePlayerBid(int amount) {
 		_actor.getCurrentBidField().setText(amount + " €");
 		_auction.bid(_playerPresenter.getSession(), amount);
-		dispatchAction(new AuctionEvent(this, AuctionEvent.PLACE_BID));
+		dispatchEvent(new AuctionEvent(this, AuctionEvent.PLACE_BID));
 	}
 	
 	public void passPlayer() {
 		_auction.pass(_playerPresenter.getSession());
-		dispatchAction(new AuctionEvent(this, AuctionEvent.PASS));
+		dispatchEvent(new AuctionEvent(this, AuctionEvent.PASS));
 	}
 	
 	public Auction start(CardActor card) {

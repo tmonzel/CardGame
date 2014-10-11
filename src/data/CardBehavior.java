@@ -1,7 +1,6 @@
-package events;
+package data;
 
 import materials.Player;
-import data.Card;
 
 public class CardBehavior {
 	protected Card _card;

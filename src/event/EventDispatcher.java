@@ -1,19 +1,18 @@
-package events;
+package event;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ActionDispatcher {
+public class EventDispatcher {
 	private HashMap<Integer, ArrayList<ActionListener>> _listeners;
 	
-	public ActionDispatcher() {
+	public EventDispatcher() {
 		_listeners = new HashMap<Integer, ArrayList<ActionListener>>();
-		
 	}
 	
-	public void addActionListener(int id, ActionListener listener) {
+	public void addEventListener(int id, ActionListener listener) {
 		if(!_listeners.containsKey(id)) {
 			_listeners.put(id, new ArrayList<ActionListener>());
 		}
@@ -21,7 +20,7 @@ public class ActionDispatcher {
 		_listeners.get(id).add(listener);
 	}
 	
-	public void dispatchAction(ActionEvent event) {
+	public void dispatchEvent(ActionEvent event) {
 		ArrayList<ActionListener> listeners = _listeners.get(event.getID());
 		for(ActionListener l : listeners) {
 			l.actionPerformed(event);

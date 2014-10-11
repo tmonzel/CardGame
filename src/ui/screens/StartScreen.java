@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class StartScreen extends AbstractScreen {
+public class StartScreen extends TableScreen {
 	
 	@Override
 	public void initialize() {
@@ -22,9 +22,6 @@ public class StartScreen extends AbstractScreen {
 				CardGame.switchScreen(new PlayScreen());
 			}
 		});
-		
-		Image background = new Image(CardGame.assets().get("assets/background.jpg", Texture.class));
-		_stage.addActor(background);
 		
 		db.setCenterPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		_stage.addActor(db);

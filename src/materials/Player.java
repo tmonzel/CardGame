@@ -1,12 +1,14 @@
 package materials;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import data.Card;
 
 public class Player {
 	private String _name;
-	private ArrayList<Card> _cards;
+	private Set<Card> _cards;
 	private int _money = 60;
 	private int _basicIncome = 30;
 	private int _wealthAmount;
@@ -14,7 +16,7 @@ public class Player {
 	private boolean _starter = false;
 	
 	public Player(String name) {
-		_cards = new ArrayList<Card>();
+		_cards = new HashSet<>();
 		_name = name;
 	}
 	
@@ -49,7 +51,7 @@ public class Player {
 		depositMoney(_productionAmount);
 	}
 	
-	public ArrayList<Card> getCards() {
+	public Set<Card> getCards() {
 		return _cards;
 	}
 	

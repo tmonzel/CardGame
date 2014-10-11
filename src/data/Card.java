@@ -1,7 +1,6 @@
 package data;
 
 import materials.Player;
-import events.CardBehavior;
 
 public enum Card {
 	

@@ -3,6 +3,7 @@ package ui.screens;
 import java.util.ArrayList;
 
 import materials.Player;
+import materials.Table;
 import ui.actors.CardActor;
 import ui.actors.DeckActor;
 import ui.buttons.DefaultButton;
@@ -18,32 +19,35 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import data.Card;
 
-public class PlayScreen extends AbstractScreen {
+public class PlayScreen extends TableScreen {
 	
 	@Override
 	public void initialize() {
-		ArrayList<Player> sessions = new ArrayList<Player>();
-		sessions.add(new Player("Thomas"));
-		sessions.add(new Player("Marco"));
-		sessions.add(new Player("Pedram"));
-		sessions.add(new Player("Melli"));
+		Table table = new Table();
+		table.startWith(0);
 		
-		PlayerPresenter playerPresenter = new PlayerPresenter(sessions);
+		// Adding players
+		table.addPlayer(new Player("Thomas"));
+		table.addPlayer(new Player("Marco"));
+		table.addPlayer(new Player("Pedram"));
+		table.addPlayer(new Player("Melli"));
+		
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new Player("Thomas"));
+		players.add(new Player("Marco"));
+		players.add(new Player("Pedram"));
+		players.add(new Player("Melli"));
+		
+		PlayerPresenter playerPresenter = new PlayerPresenter(table);
 		
 		DeckActor deck = new DeckActor();
 		deck.setPosition(Gdx.graphics.getWidth()-450, Gdx.graphics.getHeight()/2 - 120);
 		
 		for(Card card : CardGame.buildDeck()) {
-			CardActor actor = new CardActor(card);
-			actor.setFormat(CardActor.DECK_SCALE);
-			deck.place(actor);
+			deck.place(new CardActor(card));
 		}
 		
-		MarketPresenter marketPresenter = new MarketPresenter(playerPresenter, deck);
-
-
-		Image background = new Image(CardGame.assets().get("assets/background.jpg", Texture.class));
-		_stage.addActor(background);
+		MarketPresenter marketPresenter = new MarketPresenter(table, deck);
 		
 		setupHelperButtons();
 		
@@ -51,7 +55,7 @@ public class PlayScreen extends AbstractScreen {
 		_stage.addActor(marketPresenter.getLayer());
 		_stage.addActor(playerPresenter.getLayer());
 
-		marketPresenter.startAuctions();
+		marketPresenter.startPeriod();
 	}
 	
 	private void setupHelperButtons() {
