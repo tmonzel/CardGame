@@ -42,7 +42,7 @@ public class PlayerPresenter {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				updateActors();
-				showPlayer(_table.getSelectedPlayer());
+				presentPlayer(_table.getSelectedPlayer());
 			}
 		});
 	}
@@ -75,7 +75,7 @@ public class PlayerPresenter {
 		}
 	}
 	
-	public void showPlayer(Player p) {
+	public void presentPlayer(Player p) {
 		setName(p.getName());
 		setWallet(p.getWallet());
 		setProduction(p.getProduction());

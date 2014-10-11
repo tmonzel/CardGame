@@ -42,12 +42,12 @@ public class AuctionPresenter extends EventDispatcher {
 	
 	public void placePlayerBid(int amount) {
 		_actor.getCurrentBidField().setText(amount + " €");
-		_auction.bid(_playerPresenter.getSession(), amount);
+		//_auction.bid(_playerPresenter.getSession(), amount);
 		dispatchEvent(new AuctionEvent(this, AuctionEvent.PLACE_BID));
 	}
 	
 	public void passPlayer() {
-		_auction.pass(_playerPresenter.getSession());
+		//_auction.pass(_playerPresenter.getSession());
 		dispatchEvent(new AuctionEvent(this, AuctionEvent.PASS));
 	}
 	

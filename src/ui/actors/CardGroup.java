@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import data.CardFormat;
+
 public class CardGroup extends DisplayContainer {
 	
 	public CardGroup() {
@@ -54,7 +56,7 @@ public class CardGroup extends DisplayContainer {
 				_viewActor = new CardActor(ca.getCard());
 				//Tween.to(_viewActor, ActorAccessor.SCALE_XY, 0.3f).target(CardActor.VIEW_SCALE).ease(Expo.OUT).start(CardGame.tweens());
 				
-				_viewActor.setFormat(CardActor.VIEW_SCALE);
+				_viewActor.setFormat(CardFormat.VIEW);
 				stage.addActor(_viewActor);
 				updatePosition(ca, x, y);
 
@@ -69,7 +71,7 @@ public class CardGroup extends DisplayContainer {
 	
 		});
 		
-		card.setFormat(CardActor.HAND_SCALE);
+		card.setFormat(CardFormat.HAND);
 		card.setPosition(0, 0);
 		addActor(card);
 	}

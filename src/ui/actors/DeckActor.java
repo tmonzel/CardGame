@@ -10,16 +10,21 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import data.Card;
+import data.CardFormat;
+
 public class DeckActor extends DisplayContainer {
 	private Stack<CardActor> _placedDeck;
 	private float _deckIndex = 0;
 	
 	public DeckActor() {
 		_placedDeck = new Stack<CardActor>();
+		setBounds(CardFormat.DECK.getBounds());
 	}
 	
-	public void place(CardActor card) {
-		card.setFormat(CardActor.DECK_SCALE);
+	public void place(Card c) {
+		CardActor card = new CardActor(c);
+		card.setFormat(CardFormat.DECK);
 		
 		card.addListener(new ClickListener() {
 			@Override

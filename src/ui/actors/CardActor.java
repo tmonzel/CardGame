@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import data.Card;
+import data.CardFormat;
 import data.CardType;
 
 public class CardActor extends DisplayContainer {
@@ -29,16 +30,16 @@ public class CardActor extends DisplayContainer {
 		_coverImage = buildImageWith(_card.getCoverFile());
 		addActor(_coverImage);
 		
-		setFormat(DECK_SCALE);
+		setFormat(CardFormat.DECK);
 	}
 	
 	public Rectangle getFormatSize(float scale) {
 		return new Rectangle(0, 0, _coverImage.getWidth()*scale, _coverImage.getHeight()*scale);
 	}
 	
-	public void setFormat(float scale) {
-		Rectangle rect = getFormatSize(scale);
-		setScale(scale);
+	public void setFormat(CardFormat format) {
+		Rectangle rect = format.getBounds();
+		setScale(format.getScale());
 		setSize(rect.width, rect.height);
 	}
 	

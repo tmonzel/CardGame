@@ -3,6 +3,7 @@ package ui.presenters;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import materials.Auction;
 import materials.Player;
@@ -10,6 +11,8 @@ import materials.Table;
 import ui.actors.CardActor;
 import ui.actors.DeckActor;
 import ui.actors.DisplayContainer;
+import ui.actors.Layer;
+import ui.actors.MarketLayer;
 import ui.events.AuctionEvent;
 import ui.tween.ActorAccessor;
 import app.CardGame;
@@ -19,6 +22,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.equations.Expo;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -26,7 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import data.Card;
 
 public class MarketPresenter {
-	private DisplayContainer _layer;
+	private MarketLayer _layer;
 	private PlayerPresenter _playerPresenter;
 	private AuctionPresenter _auctionPresenter;
 	private ArrayList<CardActor> _placedCards;
@@ -36,11 +40,10 @@ public class MarketPresenter {
 	private int _auctionIndex;
 	private Table _table;
 	
-	public MarketPresenter(Table table, DeckActor deck) {
+	public MarketPresenter(Table table) {
 		_table = table;
-		_layer = new DisplayContainer();
+		_layer = new MarketLayer();
 		_placedCards = new ArrayList<CardActor>();
-		_deckActor = deck;
 		_auctionPresenter = new AuctionPresenter(_playerPresenter);
 		_auctionPresenter.addEventListener(AuctionEvent.PLACE_BID, new ActionListener() {
 			
@@ -93,6 +96,10 @@ public class MarketPresenter {
 		}
 		
 		
+	}
+	
+	public void presentDeck(Stack<Card> cards) {
+		_layer.placeDeck(cards);
 	}
 	
 	public void placeCard(CardActor a) {
@@ -185,7 +192,7 @@ public class MarketPresenter {
 	}
 	
 	public void startPeriod() {
-		int takeCount = 5;
+		int takeCount = getAuctionCount();
 		float xPos = _deckActor.getX()-230;
 		float delay = 0;
 		
@@ -231,6 +238,10 @@ public class MarketPresenter {
 		});
 		
 		tweens.start(CardGame.tweens());
+	}
+	
+	public int getAuctionCount() {
+		return _table.countPlayers() + 3;
 	}
 	
 	public DisplayContainer getLayer() {
