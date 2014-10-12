@@ -85,6 +85,10 @@ public class Auction {
 		return !_bids.containsKey(p);
 	}
 	
+	public int getMinimumBid() {
+		return _card.getMinimumBid();
+	}
+	
 	public int getBid(Player p) {
 		return _bids.get(p);
 	}

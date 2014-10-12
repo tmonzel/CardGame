@@ -130,6 +130,6 @@ public class MarketLayer extends Layer {
 	
 	public void removePlacedCard(int index) {
 		_placedCards.get(index).remove();
-		_placedCards.remove(index);
+		//_placedCards.remove(index);
 	}
 }

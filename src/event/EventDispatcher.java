@@ -21,6 +21,8 @@ public class EventDispatcher {
 	}
 	
 	public void dispatchEvent(ActionEvent event) {
+		if(!_listeners.containsKey(event.getID())) return;
+		
 		ArrayList<ActionListener> listeners = _listeners.get(event.getID());
 		for(ActionListener l : listeners) {
 			l.actionPerformed(event);

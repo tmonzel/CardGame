@@ -1,12 +1,9 @@
 package ui.presenters;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Stack;
 
 import materials.Market;
-import materials.events.MarketEvent;
 import ui.actors.AuctionActor;
 import ui.actors.MarketLayer;
 import aurelienribon.tweenengine.BaseTween;
@@ -27,19 +24,24 @@ public class MarketPresenter {
 		_layer = new MarketLayer();
 		_auctionActor = _layer.getAuctionActor();
 		
-		_market.addEventListener(MarketEvent.AUCTION_STARTED, new ActionListener() {
-			
+		applyListeners();
+	}
+	
+	private void applyListeners() {
+		_market.addObserver(new Market.Observer() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				startAuction(_market.getAuctionIndex());
-			}
-		});
-		
-		_market.addEventListener(MarketEvent.ALL_PASSED, new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void allPassed(Market m) {
 				allPlayerPassed();
+			}
+			
+			@Override
+			public void sold(Market m) {
+				cardSold();
+			}
+			
+			@Override
+			public void auctionStart(Market m) {
+				startAuction(m.getAuctionIndex());
 			}
 		});
 		
@@ -56,7 +58,6 @@ public class MarketPresenter {
 				pass();
 			}
 		});
-
 	}
 	
 	public void placeBid() {
@@ -75,12 +76,20 @@ public class MarketPresenter {
 		_market.startNextAuction();
 	}
 	
+	public void cardSold() {
+		_layer.removePlacedCard(_market.getAuctionIndex());
+		_market.startNextAuction();
+	}
+	
 	public void presentDeck(Stack<Card> cards) {
 		_layer.placeDeck(cards);
 	}
 	
 	public void startAuction(int index) {
-		_layer.showAuction(index);
+		AuctionActor actor = _layer.showAuction(index);
+		
+		actor.getBidAmountField().setText(_market.getAuction().getMinimumBid() + "");
+		actor.getCurrentBidField().setText("0 €");
 	}
 	
 	public void startPeriod() {

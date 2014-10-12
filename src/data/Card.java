@@ -33,10 +33,7 @@ public enum Card {
 		47, 0, 0,
 		
 		new CardBehavior() {
-			public void targetCard(Player owner, Player targetPlayer, Card targetCard) {
-				targetPlayer.removeCard(targetCard);
-				owner.removeCard(_card);
-			}
+			
 		}
 	),
 	

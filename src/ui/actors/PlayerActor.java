@@ -13,6 +13,9 @@ public class PlayerActor extends DisplayContainer {
 	private CardHand _cardHand;
 	
 	public PlayerActor() {
+		setWidth(200);
+		setHeight(200);
+		
 		_nameField = new Label("[Player name]", new LabelStyle(Fonts.HORSERAD_LABEL, Color.WHITE));
 		addActor(_nameField);
 		
@@ -25,7 +28,7 @@ public class PlayerActor extends DisplayContainer {
 		addActor(_productionField);
 		
 		_cardHand = new CardHand();
-		
+		_cardHand.hide();
 		addActor(_cardHand);
 	}
 	

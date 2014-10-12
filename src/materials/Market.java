@@ -2,12 +2,40 @@ package materials;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import data.Card;
-import materials.events.MarketEvent;
-import event.EventDispatcher;
 
-public class Market extends EventDispatcher {
+public class Market extends Observable {
+	public enum EventType {
+		ALL_PASSED, SOLD, AUCTION_START;
+	}
+	
+	public static class Observer implements java.util.Observer {
+
+		@Override
+		public void update(Observable o, Object arg) {	
+			switch((EventType) arg) {
+				case AUCTION_START: auctionStart((Market) o); break;
+				case ALL_PASSED: allPassed((Market) o); break;
+				case SOLD: sold((Market) o); break;
+				default: break;
+			}
+		}
+		
+		public void auctionStart(Market o) {
+			
+		}
+		
+		public void allPassed(Market o) {
+			
+		}
+		
+		public void sold(Market o) {
+			
+		}
+	}
+	
 	private List<List<Auction>> _periods;
 	private int _periodIndex = 0;
 	private int _auctionIndex = 0;
@@ -33,12 +61,19 @@ public class Market extends EventDispatcher {
 		startAuction(_auctionIndex+1);
 	}
 	
+	private void notify(EventType type) {
+		setChanged();
+		notifyObservers(type);
+		clearChanged();
+	}
+	
 	public void startAuction(int index) {
 		_startedAuction = getPeriod().get(index);
 		_startedAuction.start(_table.getPlayers());
 		_auctionIndex = index;
 		_table.selectStartPlayer();
-		dispatchEvent(new MarketEvent(this, MarketEvent.AUCTION_STARTED));
+		
+		notify(EventType.AUCTION_START);
 	}
 	
 	public void startPeriod(List<Card> cards) {
@@ -56,7 +91,7 @@ public class Market extends EventDispatcher {
 		switch(_startedAuction.getStatus()) {
 			case ALL_PASSED:
 				// All passed
-				dispatchEvent(new MarketEvent(this, MarketEvent.ALL_PASSED));
+				notify(EventType.ALL_PASSED);
 			break;
 			case SOLD:
 				// Sold
@@ -64,8 +99,8 @@ public class Market extends EventDispatcher {
 				_table.setCardOwner(_startedAuction.getCard(), winner);
 				winner.withdrawMoney(_startedAuction.getHighestBid());
 				_table.startWith(winner);
-				
-				dispatchEvent(new MarketEvent(this, MarketEvent.SOLD));
+				notify(EventType.SOLD);
+			break;
 			default:
 				// otherwise select the next player
 				_table.nextPlayer();

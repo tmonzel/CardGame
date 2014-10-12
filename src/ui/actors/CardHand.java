@@ -12,34 +12,27 @@ public class CardHand extends DisplayContainer {
 	
 	public CardHand() {
 		_groups = new HashMap<>();
-		placeGroups();
-	}
-
-	public void placeGroups() {
-		float x = 0;
-		for(CardType type : CardType.values()) {
-			CardGroup group = new CardGroup();
-			group.setPosition(x, -100);
-			_groups.put(type, group);
-			addActor(group);
-			
-			x += 150;
-		}
 	}
 	
 	public void updateCards(Set<Card> cards) {
+		_groups.clear();
 		clear();
 		
+		float x = 0;
 		for(Card c : cards) {
-			getGroupByType(c.getType()).addCard(new CardActor(c));
+			CardType type = c.getType();
+			
+			if(!_groups.containsKey(type)) {
+				CardGroup newGroup = new CardGroup();
+				newGroup.setPosition(x, 0);
+				_groups.put(type, newGroup);
+				addActor(newGroup);
+				x += 150;
+			}
+			
+			_groups.get(type).addCard(new CardActor(c));
 		}
-	}
-	
-	public void clear() {
-		for(CardGroup g : _groups.values()) g.clear();
-	}
-	
-	public CardGroup getGroupByType(CardType type) {
-		return _groups.get(type);
+		
+		setWidth(x);
 	}
 }

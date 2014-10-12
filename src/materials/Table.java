@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
-import materials.events.TableEvent;
 import data.Card;
-import event.EventDispatcher;
 
-public class Table extends EventDispatcher {
+public class Table extends Observable {
 	private List<Player> _players;
 	private Map<Card, Player> _playerCards;
 	private int _selectedPlayerIndex;;
@@ -26,7 +25,9 @@ public class Table extends EventDispatcher {
 	
 	public Player selectPlayer(int index) {
 		_selectedPlayerIndex = index;
-		dispatchEvent(new TableEvent(this, TableEvent.PLAYER_SELECTED));
+		setChanged();
+		notifyObservers();
+		clearChanged();
 		return getSelectedPlayer();
 	}
 	
@@ -44,6 +45,7 @@ public class Table extends EventDispatcher {
 	
 	public void setCardOwner(Card c, Player p) {
 		_playerCards.put(c, p);
+		p.addCard(c);
 	}
 	
 	public int countPlayers() {

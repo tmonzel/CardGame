@@ -5,7 +5,7 @@ import materials.Player;
 import materials.Table;
 import ui.buttons.DefaultButton;
 import ui.presenters.MarketPresenter;
-import ui.presenters.PlayerPresenter;
+import ui.presenters.TablePresenter;
 import app.CardGame;
 
 import com.badlogic.gdx.Gdx;
@@ -25,7 +25,7 @@ public class PlayScreen extends TableScreen {
 		t.addPlayer(new Player("Pedram"));
 		t.addPlayer(new Player("Melli"));
 		
-		PlayerPresenter playerPresenter = new PlayerPresenter(t);
+		TablePresenter playerPresenter = new TablePresenter(t);
 
 		MarketPresenter marketPresenter = new MarketPresenter(new Market(t));
 		marketPresenter.presentDeck(CardGame.cards().buildDeck(30));
