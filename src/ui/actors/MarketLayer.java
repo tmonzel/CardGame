@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import materials.Card;
+import materials.Deck;
+import models.CardModel;
 import ui.tween.ActorAccessor;
 import app.CardGame;
 import aurelienribon.tweenengine.BaseTween;
@@ -15,8 +18,6 @@ import aurelienribon.tweenengine.equations.Expo;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
-import data.Card;
 
 public class MarketLayer extends Layer {
 	private DeckActor _deckActor;
@@ -35,10 +36,8 @@ public class MarketLayer extends Layer {
 		addActor(_auctionActor);
 	}
 	
-	public void placeDeck(Stack<Card> cards) {
-		for(Card card : cards) {
-			_deckActor.place(card);
-		}
+	public void placeDeck(Deck deck) {
+		_deckActor.place(deck);
 	}
 	
 	public List<Card> placeCards(int takeCount, TweenCallback callback) {

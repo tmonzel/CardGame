@@ -3,7 +3,7 @@ package materials;
 import java.util.HashSet;
 import java.util.Set;
 
-import data.Card;
+import models.CardModel;
 
 public class Player {
 	private String _name;
@@ -28,7 +28,7 @@ public class Player {
 		update();
 	}
 	
-	public void removeCard(Card c) {
+	public void removeCard(CardModel c) {
 		_cards.remove(c);
 		update();
 	}

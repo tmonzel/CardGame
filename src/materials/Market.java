@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import data.Card;
+import models.CardModel;
 
 public class Market extends Observable {
 	public enum EventType {

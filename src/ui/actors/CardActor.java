@@ -1,5 +1,9 @@
 package ui.actors;
 
+import materials.Card;
+import models.CardModel;
+import models.CardFormat;
+import models.CardType;
 import ui.tween.ActorAccessor;
 import app.CardGame;
 import aurelienribon.tweenengine.Tween;
@@ -8,10 +12,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
-import data.Card;
-import data.CardFormat;
-import data.CardType;
 
 public class CardActor extends DisplayContainer {
 	public static final float DECK_SCALE = .5f;
@@ -33,10 +33,6 @@ public class CardActor extends DisplayContainer {
 		setFormat(CardFormat.DECK);
 	}
 	
-	public Rectangle getFormatSize(float scale) {
-		return new Rectangle(0, 0, _coverImage.getWidth()*scale, _coverImage.getHeight()*scale);
-	}
-	
 	public void setFormat(CardFormat format) {
 		Rectangle rect = format.getBounds();
 		setScale(format.getScale());
@@ -51,18 +47,6 @@ public class CardActor extends DisplayContainer {
 	
 	public Card getCard() {
 		return _card;
-	}
-	
-	public CardType getType() {
-		return _card.getType();
-	}
-	
-	public int getStatus() {
-		return _card.getWealthAmount();
-	}
-	
-	public int getProduction() {
-		return _card.getProductionAmount();
 	}
 	
 	public void flipToCover() {

@@ -6,17 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import data.Card;
+import models.CardModel;
 
 public class Table extends Observable {
 	private List<Player> _players;
+	private Deck _deck;
 	private Map<Card, Player> _playerCards;
 	private int _selectedPlayerIndex;;
 	private int _startPlayerIndex;
 	
-	public Table() {
+	public Table(Deck deck) {
 		_players = new ArrayList<>();
 		_playerCards = new HashMap<>();
+		_deck = deck;
 	}
 	
 	public void addPlayer(Player p) {

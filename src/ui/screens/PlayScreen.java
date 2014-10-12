@@ -1,5 +1,6 @@
 package ui.screens;
 
+import materials.Deck;
 import materials.Market;
 import materials.Player;
 import materials.Table;
@@ -16,22 +17,24 @@ public class PlayScreen extends TableScreen {
 	
 	@Override
 	public void initialize() {
-		Table t = new Table();
-		t.startWith(0);
+		Deck deck = new Deck(CardGame.cards().buildDeck(30));
+		
+		Table table = new Table(deck);
+		table.startWith(0);
 		
 		// Adding players
-		t.addPlayer(new Player("Thomas"));
-		t.addPlayer(new Player("Marco"));
-		t.addPlayer(new Player("Pedram"));
-		t.addPlayer(new Player("Melli"));
+		table.addPlayer(new Player("Thomas"));
+		table.addPlayer(new Player("Marco"));
+		table.addPlayer(new Player("Pedram"));
+		table.addPlayer(new Player("Melli"));
 		
-		TablePresenter playerPresenter = new TablePresenter(t);
+		TablePresenter tablePresenter = new TablePresenter(table);
 
-		MarketPresenter marketPresenter = new MarketPresenter(new Market(t));
-		marketPresenter.presentDeck(CardGame.cards().buildDeck(30));
-
+		MarketPresenter marketPresenter = new MarketPresenter(new Market(table));
+		marketPresenter.presentDeck(deck);
+		
+		_stage.addActor(tablePresenter.getLayer());
 		_stage.addActor(marketPresenter.getLayer());
-		_stage.addActor(playerPresenter.getLayer());
 		setupHelperButtons();
 		
 		marketPresenter.startPeriod();

@@ -1,8 +1,9 @@
-package data;
+package models;
 
+import materials.Card;
 import materials.Player;
 
-public enum Card {
+public enum CardModel {
 	
 	// Aktionskarten
 	ANWALT(
@@ -469,7 +470,7 @@ public enum Card {
 	private int _productionAmount;
 	private CardBehavior _behavior;
 	
-	private Card(
+	private CardModel(
 			CardType type, 
 			String coverFile, 
 			String backFile, 
@@ -487,7 +488,7 @@ public enum Card {
 		_behavior.setCard(this);
 	}
 	
-	private Card(
+	private CardModel(
 			CardType type, 
 			String coverFile, 
 			String backFile, 

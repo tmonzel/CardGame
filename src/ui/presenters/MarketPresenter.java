@@ -3,7 +3,10 @@ package ui.presenters;
 import java.util.List;
 import java.util.Stack;
 
+import materials.Card;
+import materials.Deck;
 import materials.Market;
+import models.CardModel;
 import ui.actors.AuctionActor;
 import ui.actors.MarketLayer;
 import aurelienribon.tweenengine.BaseTween;
@@ -11,8 +14,6 @@ import aurelienribon.tweenengine.TweenCallback;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
-import data.Card;
 
 public class MarketPresenter {
 	private MarketLayer _layer;
@@ -81,8 +82,8 @@ public class MarketPresenter {
 		_market.startNextAuction();
 	}
 	
-	public void presentDeck(Stack<Card> cards) {
-		_layer.placeDeck(cards);
+	public void presentDeck(Deck deck) {
+		_layer.placeDeck(deck);
 	}
 	
 	public void startAuction(int index) {

@@ -1,5 +1,7 @@
 package ui.actors;
 
+import models.CardFormat;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -7,8 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
-import data.CardFormat;
 
 public class CardGroup extends DisplayContainer {
 	
@@ -35,7 +35,7 @@ public class CardGroup extends DisplayContainer {
 					globals.y = Gdx.graphics.getHeight() - _viewActor.getHeight()/2 - 250;
 				}
 				
-				Rectangle format = _viewActor.getFormatSize(CardActor.VIEW_SCALE);
+				Rectangle format = CardFormat.VIEW.getBounds();
 				
 				_viewActor.setPosition(globals.x - format.getWidth()/2, globals.y - format.getHeight()/2 + 250);
 			}

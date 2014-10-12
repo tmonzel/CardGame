@@ -1,12 +1,18 @@
-package data;
+package models;
 
+import ui.actors.CardActor;
 import materials.Player;
 
 public class CardBehavior {
-	protected Card _card;
+	protected CardModel _card;
+	protected CardActor _actor;
 	
-	public void setCard(Card card) {
-		_card = card;
+	public void setCard(CardModel c) {
+		_card = c;
+	}
+	
+	public void setActor(CardActor a) {
+		_actor = a;
 	}
 	
 	public void update(Player owner) {

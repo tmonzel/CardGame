@@ -4,45 +4,51 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
+import materials.Card;
+import materials.Deck;
+import models.CardFormat;
 import ui.utils.MouseUtil;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import data.Card;
-import data.CardFormat;
-
 public class DeckActor extends DisplayContainer {
+	private Deck _deck;
 	private Stack<CardActor> _placedDeck;
-	private float _deckIndex = 0;
 	
 	public DeckActor() {
-		_placedDeck = new Stack<CardActor>();
+		_placedDeck = new Stack<>();
 		setBounds(CardFormat.DECK.getBounds());
 	}
 	
-	public void place(Card c) {
-		CardActor card = new CardActor(c);
-		card.setFormat(CardFormat.DECK);
+	public void place(Deck deck) {
+		_deck = deck;
 		
-		card.addListener(new ClickListener() {
-			@Override
-			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				MouseUtil.changeCursor(MouseUtil.HAND);
-			}
+		float offset = 0;
+		
+		for(Card c : _deck) {
+			CardActor actor = new CardActor(c);
+			actor.setFormat(CardFormat.DECK);
 			
-			@Override
-			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-				MouseUtil.resetCursor();
-			}
-		});
-
-		card.flipToBack();
-		card.setPosition(_deckIndex, _deckIndex);
-		addActor(card);
-		_placedDeck.push(card);
-		_deckIndex += .5f;
+			actor.addListener(new ClickListener() {
+				@Override
+				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+					MouseUtil.changeCursor(MouseUtil.HAND);
+				}
+				
+				@Override
+				public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+					MouseUtil.resetCursor();
+				}
+			});
+	
+			actor.flipToBack();
+			actor.setPosition(offset, offset);
+			addActor(actor);
+			_placedDeck.add(actor);
+			offset += .5f;
+		}
 	}
 	
 	public ArrayList<CardActor> takeCards(int number) {

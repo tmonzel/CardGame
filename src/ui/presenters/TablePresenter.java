@@ -5,26 +5,26 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
+import materials.Card;
 import materials.Player;
 import materials.Table;
+import models.CardModel;
 import ui.actors.PlayerActor;
-import ui.actors.PlayerLayer;
+import ui.actors.TableLayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import data.Card;
-
 public class TablePresenter {
-	private PlayerLayer _layer;
+	private TableLayer _layer;
 	private Table _table;
 	private ArrayList<PlayerActor> _playerActors;
 	
 	public TablePresenter(Table table) {
 		_table = table;
-		_layer = new PlayerLayer();
+		_layer = new TableLayer();
 		_playerActors = new ArrayList<PlayerActor>();
 		
 		applyObservers();
@@ -115,7 +115,7 @@ public class TablePresenter {
 		_layer.getStatusField().setText(amount + "");
 	}
 	
-	public PlayerLayer getLayer() {
+	public TableLayer getLayer() {
 		return _layer;
 	}
 }

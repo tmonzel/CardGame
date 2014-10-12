@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import data.Card;
+import models.CardModel;
 
 public class Auction {
 	public enum Status {

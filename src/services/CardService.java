@@ -7,27 +7,28 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import data.Card;
+import materials.Card;
+import models.CardModel;
 
 public class CardService {
-	private Set<Card> _cards;
+	private Set<CardModel> _cards;
 	
 	public CardService() {
 		_cards = new HashSet<>();
 	}
 	
-	public void addCard(Card c) {
+	public void addCard(CardModel c) {
 		_cards.add(c);
 	}
 	
 	public Stack<Card> buildDeck(int cardNum) {
-		Stack<Card> deck = new Stack<Card>();
-		List<Card> cards = new ArrayList<>(_cards);
+		Stack<Card> deck = new Stack<>();
+		List<CardModel> cards = new ArrayList<>(_cards);
 		
 		Collections.shuffle(cards);
 		
 		for(int i = 0; i < cardNum; i++) {
-			deck.push(cards.get(i));
+			deck.push(new Card(cards.get(i)));
 		}
 		
 		return deck;

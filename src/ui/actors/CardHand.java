@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import data.Card;
-import data.CardType;
+import materials.Card;
+import models.CardModel;
+import models.CardType;
 
 public class CardHand extends DisplayContainer {
 	private Map<CardType, CardGroup> _groups;

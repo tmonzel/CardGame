@@ -1,7 +1,5 @@
 package app;
-import java.util.Collections;
-import java.util.Stack;
-
+import models.CardModel;
 import services.CardService;
 import ui.screens.StartScreen;
 import ui.tween.ActorAccessor;
@@ -18,8 +16,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
-import data.Card;
 
 public class CardGame extends Game {
 	GL20 gl;
@@ -43,7 +39,7 @@ public class CardGame extends Game {
 		_cards = new CardService();
 		_assetManager.load("assets/background.jpg", Texture.class);
 		
-		for(Card c : Card.values()) {
+		for(CardModel c : CardModel.values()) {
 			_cards.addCard(c);
 			_assetManager.load(c.getCoverFile(), Texture.class);
 			_assetManager.load(c.getBackFile(), Texture.class);
