@@ -9,6 +9,7 @@ import model.CardModel;
 import ui.buttons.DefaultButton;
 import ui.presenters.MarketPresenter;
 import ui.presenters.TablePresenter;
+import app.CardGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,16 +19,16 @@ public class PlayScreen extends TableScreen {
 	
 	@Override
 	public void initialize() {
-		//Deck deck = CardGame.cards().buildDeck(30);
-		Deck deck = new Deck();
-		deck.addCard(new Card(CardModel.BERSERKER));
+		Deck deck = CardGame.cards().buildDeck(30);
+		//Deck deck = new Deck();
+		/*deck.addCard(new Card(CardModel.BERSERKER));
 		deck.addCard(new Card(CardModel.ANWALT));
 		deck.addCard(new Card(CardModel.ARMBANDUHR));
 		deck.addCard(new Card(CardModel.BAECKER));
 		deck.addCard(new Card(CardModel.AZUBI));
 		deck.addCard(new Card(CardModel.MEGA_IN));
 		deck.addCard(new Card(CardModel.SABOTAGE));
-		deck.addCard(new Card(CardModel.WERFT));
+		deck.addCard(new Card(CardModel.WERFT));*/
 		
 		deck.shuffle();
 		
