@@ -2,16 +2,12 @@ package ui.actors;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import materials.Card;
 import materials.Deck;
-import models.CardFormat;
-import ui.utils.MouseUtil;
-
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import model.CardFormat;
 
 public class DeckActor extends DisplayContainer {
 	private Deck _deck;
@@ -24,35 +20,21 @@ public class DeckActor extends DisplayContainer {
 	
 	public void place(Deck deck) {
 		_deck = deck;
-		
+
 		float offset = 0;
 		
 		for(Card c : _deck) {
-			CardActor actor = new CardActor(c);
-			actor.setFormat(CardFormat.DECK);
-			
-			actor.addListener(new ClickListener() {
-				@Override
-				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-					MouseUtil.changeCursor(MouseUtil.HAND);
-				}
-				
-				@Override
-				public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-					MouseUtil.resetCursor();
-				}
-			});
-	
+			CardActor actor = new CardActor(c);	
 			actor.flipToBack();
 			actor.setPosition(offset, offset);
 			addActor(actor);
-			_placedDeck.add(actor);
+			_placedDeck.push(actor);
 			offset += .5f;
 		}
 	}
 	
-	public ArrayList<CardActor> takeCards(int number) {
-		ArrayList<CardActor> cards = new ArrayList<CardActor>();
+	public List<CardActor> takeCards(int number) {
+		List<CardActor> cards = new ArrayList<>();
 		
 		for(int i = 0; i < number; i++) {
 			cards.add(0, _placedDeck.pop());

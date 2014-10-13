@@ -1,12 +1,10 @@
 package ui.presenters;
 
 import java.util.List;
-import java.util.Stack;
 
 import materials.Card;
 import materials.Deck;
 import materials.Market;
-import models.CardModel;
 import ui.actors.AuctionActor;
 import ui.actors.MarketLayer;
 import aurelienribon.tweenengine.BaseTween;

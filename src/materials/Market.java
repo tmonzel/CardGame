@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import models.CardModel;
-
 public class Market extends Observable {
 	public enum EventType {
 		ALL_PASSED, SOLD, AUCTION_START;

@@ -1,14 +1,8 @@
 package ui.actors;
 
-import models.CardFormat;
+import model.CardFormat;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class CardGroup extends DisplayContainer {
 	
@@ -23,8 +17,7 @@ public class CardGroup extends DisplayContainer {
 			}
 		}
 		
-		card.clearListeners();
-		card.addListener(new ClickListener() {
+		/*card.addListener(new ClickListener() {
 			private CardActor _viewActor;
 			private CardActor _handActor;
 			
@@ -59,7 +52,7 @@ public class CardGroup extends DisplayContainer {
 				_viewActor.setFormat(CardFormat.VIEW);
 				stage.addActor(_viewActor);
 				updatePosition(ca, x, y);
-
+				
 				return true;
 			}
 			
@@ -69,7 +62,7 @@ public class CardGroup extends DisplayContainer {
 				_viewActor.remove();
 			}
 	
-		});
+		});*/
 		
 		card.setFormat(CardFormat.HAND);
 		card.setPosition(0, 0);

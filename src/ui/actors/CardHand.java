@@ -5,8 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import materials.Card;
-import models.CardModel;
-import models.CardType;
+import model.CardType;
 
 public class CardHand extends DisplayContainer {
 	private Map<CardType, CardGroup> _groups;

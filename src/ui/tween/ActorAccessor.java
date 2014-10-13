@@ -1,8 +1,8 @@
 package ui.tween;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-
 import aurelienribon.tweenengine.TweenAccessor;
+
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class ActorAccessor implements TweenAccessor<Actor> {
 

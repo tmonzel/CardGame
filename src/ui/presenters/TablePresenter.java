@@ -8,14 +8,10 @@ import java.util.Set;
 import materials.Card;
 import materials.Player;
 import materials.Table;
-import models.CardModel;
 import ui.actors.PlayerActor;
 import ui.actors.TableLayer;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class TablePresenter {
 	private TableLayer _layer;
@@ -36,9 +32,18 @@ public class TablePresenter {
 			
 			@Override
 			public void update(Observable o, Object arg) {
-				present();
+				updateChairs();
 			}
 		});
+		
+		for(Player p : _table.getPlayers()) {
+			p.addObserver(new Observer() {
+				@Override
+				public void update(Observable o, Object arg) {
+					updatePlayer((Player) o);
+				}
+			});
+		}
 	}
 	
 	private void placePlayers() {
@@ -48,22 +53,6 @@ public class TablePresenter {
 			PlayerActor actor = new PlayerActor();
 			float part = Gdx.graphics.getWidth()/(numPlayers-1);
 			actor.setPosition((part*i)+part/3, Gdx.graphics.getHeight()-100);
-			actor.addListener(new ClickListener() {
-				@Override
-				public void enter(InputEvent event, float x, float y,
-						int pointer, Actor fromActor) {
-					PlayerActor pa = (PlayerActor) event.getListenerActor();
-					pa.getCardHand().setPosition(pa.getCardHand().getWidth()/-2, -220);
-					pa.getCardHand().show();
-				}
-				
-				@Override
-				public void exit(InputEvent event, float x, float y,
-						int pointer, Actor toActor) {
-					PlayerActor pa = (PlayerActor) event.getListenerActor();
-					pa.getCardHand().hide();
-				}
-			});
 			
 			
 			_playerActors.add(actor);
@@ -72,27 +61,29 @@ public class TablePresenter {
 		}
 	}
 	
-	public void present() {
+	public void updatePlayer(Player p) {
+		if(_table.getSelectedPlayer().equals(p)) {
+			setName(p.getName());
+			setWallet(p.getWallet());
+			setProduction(p.getProduction());
+			setWealth(p.getWealthAmount());
+			setCardHand(p.getCards());
+			
+			return;
+		} 
+		
+		PlayerActor a = _playerActors.get(p.getChairIndex());
+		a.updatePlayer(p);
+	}
+	
+	public void updateChairs() {
 		int index = 0;
 		for(Player p : _table.getNextPlayers()) {
-			presentPlayer(p, _playerActors.get(index));
+			p.setChairIndex(index);
 			index++;
 		}
 		
-		Player p = _table.getSelectedPlayer();
-		
-		setName(p.getName());
-		setWallet(p.getWallet());
-		setProduction(p.getProduction());
-		setWealth(p.getWealthAmount());
-		setCardHand(p.getCards());
-	}
-	
-	private void presentPlayer(Player p, PlayerActor a) {
-		a.getNameField().setText(p.getName());
-		a.getWealthField().setText(p.getWealthAmount() + "");
-		a.getProductionField().setText("+" + p.getProduction() + " €");
-		a.getCardHand().updateCards(p.getCards());
+		_table.getSelectedPlayer().setChairIndex(null);
 	}
 	
 	private void setCardHand(Set<Card> cards) {

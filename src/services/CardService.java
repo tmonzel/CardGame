@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
 import materials.Card;
-import models.CardModel;
+import materials.Deck;
+import model.CardModel;
 
 public class CardService {
 	private Set<CardModel> _cards;
@@ -21,14 +21,14 @@ public class CardService {
 		_cards.add(c);
 	}
 	
-	public Stack<Card> buildDeck(int cardNum) {
-		Stack<Card> deck = new Stack<>();
+	public Deck buildDeck(int cardNum) {
+		Deck deck = new Deck();
 		List<CardModel> cards = new ArrayList<>(_cards);
 		
 		Collections.shuffle(cards);
 		
 		for(int i = 0; i < cardNum; i++) {
-			deck.push(new Card(cards.get(i)));
+			deck.addCard(new Card(cards.get(i)));
 		}
 		
 		return deck;

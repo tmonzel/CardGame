@@ -7,8 +7,12 @@ import java.util.Stack;
 public class Deck implements Iterable<Card> {
 	private Stack<Card> _cards;
 	
-	public Deck(Stack<Card> cards) {
-		_cards = cards;
+	public Deck() {
+		_cards = new Stack<>();
+	}
+	
+	public void addCard(Card c) {
+		_cards.push(c);
 	}
 	
 	public void shuffle() {

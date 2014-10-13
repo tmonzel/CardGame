@@ -1,4 +1,4 @@
-package models;
+package model;
 
 import com.badlogic.gdx.math.Rectangle;
 

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import models.CardModel;
-
 public class Auction {
 	public enum Status {
 		IDLE, STARTED, ALL_PASSED, SOLD;

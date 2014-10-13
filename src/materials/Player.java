@@ -1,22 +1,45 @@
 package materials;
 
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Set;
 
-import models.CardModel;
-
-public class Player {
+public class Player extends Observable {
 	private String _name;
 	private Set<Card> _cards;
 	private int _money = 60;
 	private int _basicIncome = 30;
 	private int _wealthAmount;
 	private int _productionAmount;
+	private int _factoryMax = 3;
+	private Integer _chairIndex;
 	private boolean _starter = false;
+	private boolean _selected = false;
 	
 	public Player(String name) {
 		_cards = new HashSet<>();
 		_name = name;
+	}
+	
+	public void select() {
+		_selected = true;
+	}
+	
+	public boolean selected() {
+		return _selected;
+	}
+	
+	public void deselect() {
+		_selected = false;
+	}
+	
+	public void setChairIndex(Integer index) {
+		_chairIndex = index;
+		update();
+	}
+	
+	public Integer getChairIndex() {
+		return _chairIndex;
 	}
 	
 	public String getName() {
@@ -25,10 +48,11 @@ public class Player {
 	
 	public void addCard(Card c) {
 		_cards.add(c);
+		c.setOwner(this);
 		update();
 	}
 	
-	public void removeCard(CardModel c) {
+	public void removeCard(Card c) {
 		_cards.remove(c);
 		update();
 	}
@@ -38,8 +62,12 @@ public class Player {
 		_productionAmount = 0;
 		
 		for(Card c : _cards) {
-			c.getBehavior().update(this);
+			c.update();
 		}
+		
+		setChanged();
+		notifyObservers();
+		clearChanged();
 	}
 	
 	public void transferBasicIncome() {
@@ -91,6 +119,11 @@ public class Player {
 	public int raiseStatus(int amount) {
 		_wealthAmount += amount;
 		return _wealthAmount;
+	}
+	
+	public int raiseFactoryMax(int amount) {
+		_factoryMax += amount;
+		return _factoryMax;
 	}
 	
 	public void withdrawMoney(int amount) {

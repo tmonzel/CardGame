@@ -1,9 +1,7 @@
 package ui.actors;
 
 import materials.Card;
-import models.CardModel;
-import models.CardFormat;
-import models.CardType;
+import model.CardFormat;
 import ui.tween.ActorAccessor;
 import app.CardGame;
 import aurelienribon.tweenengine.Tween;
@@ -11,6 +9,7 @@ import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class CardActor extends DisplayContainer {
@@ -25,12 +24,17 @@ public class CardActor extends DisplayContainer {
 	public CardActor(Card card) {
 		_card = card;
 		_backImage = buildImageWith(_card.getBackFile());
+		//_backImage.setTouchable(Touchable.disabled);
 		addActor(_backImage);
 		
 		_coverImage = buildImageWith(_card.getCoverFile());
+		//_coverImage.setTouchable(Touchable.disabled);
 		addActor(_coverImage);
 		
 		setFormat(CardFormat.DECK);
+		setTouchable(Touchable.enabled);
+		
+		addListener(_card.getListener());
 	}
 	
 	public void setFormat(CardFormat format) {

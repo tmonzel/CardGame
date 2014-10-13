@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import models.CardModel;
-
 public class Table extends Observable {
 	private List<Player> _players;
 	private Deck _deck;
@@ -15,10 +13,23 @@ public class Table extends Observable {
 	private int _selectedPlayerIndex;;
 	private int _startPlayerIndex;
 	
-	public Table(Deck deck) {
+	public Table() {
 		_players = new ArrayList<>();
 		_playerCards = new HashMap<>();
+	}
+	
+	public void update() {
+		setChanged();
+		notifyObservers();
+		clearChanged();
+	}
+	
+	public void setDeck(Deck deck) {
 		_deck = deck;
+		
+		for(Card c : _deck) {
+			c.setTable(this);
+		}
 	}
 	
 	public void addPlayer(Player p) {
@@ -27,10 +38,16 @@ public class Table extends Observable {
 	
 	public Player selectPlayer(int index) {
 		_selectedPlayerIndex = index;
-		setChanged();
-		notifyObservers();
-		clearChanged();
-		return getSelectedPlayer();
+		
+		for(Player p : _players) {
+			p.deselect();
+		}
+		
+		Player sp = getSelectedPlayer();
+		sp.select();
+		
+		update();
+		return sp;
 	}
 	
 	public Player selectPlayer(Player p) {

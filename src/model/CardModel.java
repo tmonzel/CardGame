@@ -1,7 +1,9 @@
-package models;
+package model;
 
 import materials.Card;
 import materials.Player;
+import model.behaviors.CardBehavior;
+import model.behaviors.CardTargetBehavior;
 
 public enum CardModel {
 	
@@ -10,7 +12,21 @@ public enum CardModel {
 		CardType.ACTION,
 		"assets/cards/anwalt.png", 
 		"assets/cards/back.png", 
-		60, 0, 0
+		60, 0, 0,
+		
+		new CardTargetBehavior() {
+			public void hitCard(Card target) {			
+				if(!target.getType().equals(CardType.PRODUCTION)) {
+					return;
+				}
+				
+				// Take opponents card
+				takeCard(target);
+				
+				// Remove owners card
+				_card.destroy();
+			}
+		}
 	),
 	
 	AUFERSTEHUNG(
@@ -33,8 +49,15 @@ public enum CardModel {
 		"assets/cards/back.png", 
 		47, 0, 0,
 		
-		new CardBehavior() {
-			
+		new CardTargetBehavior() {
+			public void hitCard(Card target) {
+				
+				// Remove opponents card
+				target.destroy();
+				
+				// Remove own action card
+				_card.destroy();
+			}
 		}
 	),
 	
@@ -105,7 +128,21 @@ public enum CardModel {
 		CardType.ACTION, 
 		"assets/cards/sabotage.png", 
 		"assets/cards/back.png", 
-		43, 0, 0
+		43, 0, 0,
+		
+		new CardTargetBehavior() {
+			public void hitCard(Card target) {			
+				if(!target.getType().equals(CardType.PRODUCTION)) {
+					return;
+				}
+				
+				// Destroy opponents card
+				target.destroy();
+				
+				// Destroy owners card
+				_card.destroy();
+			}
+		}
 	),
 	
 	SONDERANGEBOT(
@@ -179,7 +216,8 @@ public enum CardModel {
 		29, 0, 0,
 		
 		new CardBehavior() {
-			public void update(Player owner) {
+			public void update() {
+				Player owner = _card.getOwner();
 				owner.raiseStatus(owner.getCards().size());
 			}
 		}
@@ -241,7 +279,9 @@ public enum CardModel {
 		46, 0, 0, 
 		
 		new CardBehavior() {
-			public void update(Player owner) {
+			public void update() {
+				Player owner = _card.getOwner();
+				
 				for(Card c : owner.getCards()) {
 					if(c.getType().equals(CardType.PRODUCTION)) {
 						owner.raiseStatus(5);
@@ -301,7 +341,8 @@ public enum CardModel {
 		39, 0, 0,
 		
 		new CardBehavior() {
-			public void update(Player owner) {
+			public void update() {
+				Player owner = _card.getOwner();
 				owner.increaseProduction(owner.getWealthAmount());
 			}
 		}
@@ -403,28 +444,64 @@ public enum CardModel {
 		CardType.SERVICE, 
 		"assets/cards/bauland-1.png", 
 		"assets/cards/back.png", 
-		20, 0, 0
+		20, 0, 0,
+		
+		new CardTargetBehavior() {
+			public void hitPlayer(Player player) {
+				player.raiseFactoryMax(1);
+				giveCardTo(player);
+				disable();
+			}
+		}
 	),
 	
 	BAULAND_2(
 		CardType.SERVICE, 
 		"assets/cards/bauland-2.png", 
 		"assets/cards/back.png", 
-		35, 3, 0
+		35, 3, 0,
+		
+		new CardTargetBehavior() {
+			public void hitPlayer(Player player) {
+				player.raiseFactoryMax(1);
+				giveCardTo(player);
+				disable();
+			}
+		}
 	),
 	
 	BAULAND_3(
 		CardType.SERVICE, 
 		"assets/cards/bauland-3.png", 
 		"assets/cards/back.png", 
-		55, 8, 0
+		55, 8, 0,
+		
+		new CardTargetBehavior() {
+			public void hitPlayer(Player player) {
+				player.raiseFactoryMax(1);
+				giveCardTo(player);
+				disable();
+			}
+		}
 	),
 	
 	MEGA_IN(
 		CardType.SERVICE, 
 		"assets/cards/mega-in.png", 
 		"assets/cards/back.png", 
-		30, 0, 0
+		30, 0, 0,
+		
+		new CardTargetBehavior() {
+			public void hitCard(Card card) {
+				Player owner = card.getOwner();
+				card.setWealth(card.getWealth()*2);
+				
+				if(!owner.equals(_card.getOwner())) owner.addCard(_card);
+				else _card.getOwner().update();
+				
+				disable();
+			}
+		}
 	),
 	
 	SECURITY(
@@ -441,9 +518,9 @@ public enum CardModel {
 		52, 2, 0,
 		
 		new CardBehavior() {
-			public void update(Player owner) {
-				super.update(owner);
-				owner.increaseBasicIncome(10);
+			public void update() {
+				super.update();
+				_card.getOwner().increaseBasicIncome(10);
 			}
 		}
 	),
@@ -452,14 +529,34 @@ public enum CardModel {
 		CardType.SERVICE, 
 		"assets/cards/supermanager.png", 
 		"assets/cards/back.png", 
-		17, 0, 0
+		17, 0, 0,
+		
+		new CardTargetBehavior() {
+			public void hitCard(Card card) {
+				Player owner = card.getOwner();
+				card.raiseProduction(card.getProductionAmount()*2);
+				
+				if(!owner.equals(_card.getOwner())) owner.addCard(_card);
+				else _card.getOwner().update();
+				
+				disable();
+			}
+		}
 	),
 	
 	VOLL_IM_TREND(
 		CardType.SERVICE, 
 		"assets/cards/voll-im-trend.png", 
 		"assets/cards/back.png", 
-		27, 3, 0
+		27, 3, 0,
+		
+		new CardTargetBehavior() {
+			public void hitPlayer(Player player) {
+
+				
+				disable();
+			}
+		}
 	);
 	
 	private String _coverFile;
@@ -485,7 +582,6 @@ public enum CardModel {
 		_wealthAmount = wealthAmount;
 		_productionAmount = productionAmount;
 		_behavior = new CardBehavior();
-		_behavior.setCard(this);
 	}
 	
 	private CardModel(
@@ -498,7 +594,6 @@ public enum CardModel {
 			CardBehavior behavior
 	) {
 		this(type, coverFile, backFile, minimumBid, wealthAmount, productionAmount);
-		behavior.setCard(this);
 		_behavior = behavior;
 	}
 	

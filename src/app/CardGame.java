@@ -1,6 +1,7 @@
 package app;
-import models.CardModel;
+import model.CardModel;
 import services.CardService;
+import ui.screens.ConnectionScreen;
 import ui.screens.StartScreen;
 import ui.tween.ActorAccessor;
 import aurelienribon.tweenengine.Tween;
@@ -39,19 +40,22 @@ public class CardGame extends Game {
 		_cards = new CardService();
 		_assetManager.load("assets/background.jpg", Texture.class);
 		
-		for(CardModel c : CardModel.values()) {
-			_cards.addCard(c);
-			_assetManager.load(c.getCoverFile(), Texture.class);
-			_assetManager.load(c.getBackFile(), Texture.class);
-		}
+		//for(CardModel c : CardModel.values()) {
+			//_cards.addCard(c);
+			//_assetManager.load(c.getCoverFile(), Texture.class);
+			//_assetManager.load(c.getBackFile(), Texture.class);
+		//}
 	}
 	
 	@Override
 	public void render() {
+		
+		
 		super.render();
 		
 		if(!assetsLoaded && _assetManager.update()) {
-			setScreen(new StartScreen());
+			setScreen(new ConnectionScreen());
+			//setScreen(new StartScreen());
 			assetsLoaded = true;
 		}
 		
@@ -81,9 +85,12 @@ public class CardGame extends Game {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "A Card Game";
-		config.width = 1920;
-		config.height = 1200;
-		config.fullscreen = true;
+		config.width = 1024;
+		config.height = 768;
+		
+		//config.width = 1920;
+		//config.height = 1200;
+		//config.fullscreen = true;
 		new LwjglApplication(new CardGame(), config);
 	}
 
